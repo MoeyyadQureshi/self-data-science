@@ -1,0 +1,22 @@
+{
+  "name": "self-data-science",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MoeyyadQureshi/self-data-science.git"
+  },
+  "author": "Moeyyad Qureshi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MoeyyadQureshi/self-data-science/issues"
+  },
+  "homepage": "https://github.com/MoeyyadQureshi/self-data-science#readme",
+  "devDependencies": {
+    "electron": "^2.0.0"
+  }
+}
