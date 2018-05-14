@@ -2,23 +2,35 @@ var app = require("electron").remote
 var fs = require("fs")
 var dialog = app.dialog
 
-document.getElementById("data-submit").onclick = () => {
-    var content = document.getElementById("data-entry").value
-    fs.writeFile("dummy.txt", content, (err) => {
-        if (err) console.log(err)
-        alert("The file has been succesfully saved")
+/*  Function takes in a list of x y coordinates seperated by spaces.
+    Returns an array with a dictionary of x and y arrays for Plotly to consume.
+*/
+function formatData(data){
+    var xy = data.split('\n')
+    var x = []
+    var y = []
+    xy.forEach((element) => {
+        var coordinates = element.split(' ')
+        x.push(coordinates[0])
+        y.push(coordinates[1])
     })
+
+    return [{
+        x: x,
+        y: y
+    }]
 }
 
-document.getElementById("data-retrieve").onclick = () => {
-    fs.readFile("dummy.txt", "utf-8", (err, data) => {
-        if (err) {
-            console.log(err)
-            return
-        }
 
-        var textbox = document.getElementById("data-entry")
-        textbox.value = data
-    })
+//Reads in data from file and displays it using Plotly
+var data = fs.readFileSync("dummy.txt").toString()
+var graph = document.getElementById("data-viz")
+Plotly.newPlot(graph, formatData(data))
+
+
+//Adds new data to file and updates graph accordingly
+document.getElementById("data-update").onclick = () => {
+    data = data + '\n' + document.getElementById("data-entry").value 
+    fs.writeFile("dummy.txt", data)
+    Plotly.newPlot(graph, formatData(data))
 }
-
